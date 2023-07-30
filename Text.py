@@ -28,22 +28,23 @@ def intify(Value):
 
 
 def VolumeModify(Value,strings):
-    Value=intify(Value)
-    Current=getcurrentvolume()
-    Modulo=Value//2
-    
     if (strings=="Inc"):
-      for i in range(Modulo):
+        Value=intify(Value)
+        Modulo=Value//2
+        for i in range(Modulo):
+            
             keyboard.press(Key.media_volume_up)
             keyboard.release(Key.media_volume_up)
             time.sleep(0.1)
     elif (strings=="Dec"):
-       for i in range(Modulo):
+        Value=intify(Value)
+        Modulo=Value//2
+        for i in range(Modulo):
             keyboard.press(Key.media_volume_down)
             keyboard.release(Key.media_volume_down)
             time.sleep(0.1)
-    elif (strings=="Set"):
-        New=Value
+    elif (strings=="Mute"):
+        keyboard.press(Key.media_volume_mute)
     
     return
     
@@ -95,8 +96,8 @@ def Assistant(MyText):
             strings=strings+"Inc"
         elif(WordCheck("Decrease",MyText)):                  
             strings=strings+"Dec"
-        elif(WordCheck("Set",MyText)):            
-            strings=strings+"Set"
+        elif(WordCheck("Mute",MyText)):            
+            strings=strings+"Mute"
     
         VolumeModify(Value,strings)
     
