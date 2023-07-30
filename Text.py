@@ -21,12 +21,25 @@ def intify(Value):
     return single_integer
 
 
-def VolumeModify(Value):
+def VolumeModify(Value,strings):
     Value=intify(Value)
     Current=44
+    New=0
     int(Current)
-    New=Current+Value
+    if (strings=="Inc"):
+        New=Current+Value
+    elif (strings=="Dec"):
+        New=Current-Value  
+    elif (strings=="Set"):
+        New=Value
+    
+    if(New>100):
+        New=100
+    elif(New<0):
+        New=0
+            
     print("currentvolume:",Current,"New Volume:",New)
+    return
 
 def SpeakText(command):
      
@@ -65,14 +78,19 @@ def extract_numeric_values(input_string):
          
 
 def Assistant(MyText):
-    if(WordCheck("Volume",MyText) and WordCheck("Increase",MyText)):
+    
+    if(WordCheck("Volume",MyText)):
         Value=extract_numeric_values(MyText)
-        VolumeModify(Value)
-    elif(WordCheck("Volume",MyText) and WordCheck("Decrease",MyText)):
-        Value=extract_numeric_values(MyText)
-        Value=intify(Value)
-        Value=0-Value
-        VolumeModify(Value)
+        strings=""
+        if(WordCheck("Increase",MyText)):
+            strings=strings+"Inc"
+        elif(WordCheck("Decrease",MyText)):                  
+            strings=strings+"Dec"
+        elif(WordCheck("Set",MyText)):            
+            strings=strings+"Set"
+    
+        VolumeModify(Value,strings)
+    
         
         
  
