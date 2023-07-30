@@ -31,24 +31,24 @@ def VolumeModify(Value,strings):
     Value=intify(Value)
     Current=getcurrentvolume()
     Modulo=Value//2
-    int(Current)
+    
     if (strings=="Inc"):
       for i in range(Modulo):
             keyboard.press(Key.media_volume_up)
             keyboard.release(Key.media_volume_up)
             time.sleep(0.1)
     elif (strings=="Dec"):
-        New=Current-Value  
+       for i in range(Modulo):
+            keyboard.press(Key.media_volume_down)
+            keyboard.release(Key.media_volume_down)
+            time.sleep(0.1)
     elif (strings=="Set"):
         New=Value
     
-    if(New>100):
-        New=100
-    elif(New<0):
-        New=0
-            
-    print("currentvolume:",Current,"New Volume:",New)
     return
+    
+            
+    
 
 def SpeakText(command):
      
