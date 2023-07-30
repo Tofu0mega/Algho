@@ -45,9 +45,23 @@ def VolumeModify(Value,strings):
             time.sleep(0.1)
     elif (strings=="Mute"):
         keyboard.press(Key.media_volume_mute)
-    
+        keyboard.release(Key.media_volume_mute)
     return
+
+
+def Mediacontrol(Task):
+    Task=Task.lower()
     
+    if(Task=="pauseplay"):
+        keyboard.press(Key.media_play_pause)
+        keyboard.release(Key.media_play_pause)
+    elif(Task=="skip"):
+        keyboard.press(Key.media_next)
+        keyboard.release(Key.media_next)
+    elif(Task=="prev"):
+        keyboard.press(Key.media_previous)
+        keyboard.release(Key.media_previous)
+    return   
             
     
 
@@ -89,9 +103,9 @@ def extract_numeric_values(input_string):
 
 def Assistant(MyText):
     
+    strings=""
     if(WordCheck("Volume",MyText)):
         Value=extract_numeric_values(MyText)
-        strings=""
         if(WordCheck("Increase",MyText)):
             strings=strings+"Inc"
         elif(WordCheck("Decrease",MyText)):                  
@@ -100,7 +114,14 @@ def Assistant(MyText):
             strings=strings+"Mute"
     
         VolumeModify(Value,strings)
-    
+    elif(WordCheck("Song",MyText) or WordCheck("Music",MyText) or WordCheck("Pause",MyText) or WordCheck("Play",MyText)):
+        if(WordCheck("Next",MyText)or WordCheck("Skip",MyText)):
+            strings=strings+"Skip"
+        elif(WordCheck("Previous",MyText) or WordCheck("Back",MyText)):
+            strings=strings+"Prev"
+        elif( WordCheck("Pause",MyText) or WordCheck("Play",MyText)):
+            strings=strings+"PausePlay"
+        Mediacontrol(strings)
         
         
 def main(): 
