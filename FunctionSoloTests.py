@@ -2,13 +2,24 @@ import pynput
 from pynput.keyboard import Key,Controller
 keyboard = Controller()
 import time
-while True:
-    for i in range(10):
-        keyboard.press(Key.media_volume_up)
-        keyboard.release(Key.media_volume_up)
-        time.sleep(0.1)
-    for i in range(10):
-        keyboard.press(Key.media_volume_down)
-        keyboard.release(Key.media_volume_down)
-        time.sleep(0.1)
-    time.sleep(2) 
+def Mediacontrol(Task):
+    Task=Task.lower()
+    
+    if(Task=="pauseplay"):
+        keyboard.press(Key.media_play_pause)
+        keyboard.release(Key.media_play_pause)
+    elif(Task=="skip"):
+        keyboard.press(Key.media_next)
+        keyboard.release(Key.media_next)
+    elif(Task=="prev"):
+        keyboard.press(Key.media_next)
+        keyboard.release(Key.media_next)
+        keyboard.press(Key.media_previous)
+        keyboard.release(Key.media_previous)
+        keyboard.press(Key.media_previous)
+        keyboard.release(Key.media_previous)
+        
+    return   
+
+
+Mediacontrol("prev")

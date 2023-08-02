@@ -11,71 +11,14 @@ import pyttsx3
 Activationword ="please" 
 # Initialize the recognizer
 r = sr.Recognizer()
- 
-# Function to convert text to
-# speech
-def getcurrentvolume():
-    return
-
-def intify(Value):
-    
-    int_str = ''.join(str(num) for num in Value)
-
-    # Convert the string back to an integer
-    single_integer = int(int_str)
-
-    return single_integer
 
 
-def VolumeModify(Value,strings):
-    if (strings=="Inc"):
-        Value=intify(Value)
-        Modulo=Value//2
-        for i in range(Modulo):
-            
-            keyboard.press(Key.media_volume_up)
-            keyboard.release(Key.media_volume_up)
-            time.sleep(0.1)
-    elif (strings=="Dec"):
-        Value=intify(Value)
-        Modulo=Value//2
-        for i in range(Modulo):
-            keyboard.press(Key.media_volume_down)
-            keyboard.release(Key.media_volume_down)
-            time.sleep(0.1)
-    elif (strings=="Mute"):
-        keyboard.press(Key.media_volume_mute)
-        keyboard.release(Key.media_volume_mute)
-    return
 
 
-def Mediacontrol(Task):
-    Task=Task.lower()
-    
-    if(Task=="pauseplay"):
-        keyboard.press(Key.media_play_pause)
-        keyboard.release(Key.media_play_pause)
-    elif(Task=="skip"):
-        keyboard.press(Key.media_next)
-        keyboard.release(Key.media_next)
-    elif(Task=="prev"):
-        keyboard.press(Key.media_next)
-        keyboard.release(Key.media_next)
-        keyboard.press(Key.media_previous)
-        keyboard.release(Key.media_previous)
-        keyboard.press(Key.media_previous)
-        keyboard.release(Key.media_previous)
-        
-    return   
-            
-    
+operationmode=1
 
-def SpeakText(command):
-     
-    # Initialize the engine
-    engine = pyttsx3.init()
-    engine.say(command)
-    engine.runAndWait()
+
+
 
 
 def WordCheck(Word,Text):
@@ -91,22 +34,19 @@ def WordCheck(Word,Text):
         return True
     else:
         return False
-
-def extract_numeric_values(input_string):
-    # Regular expression pattern to find numeric values
-    pattern = r'-?\d+(?:\.\d+)?'
-
-    # Find all occurrences of numeric values in the input string
-    numeric_values = re.findall(pattern, input_string)
-
-    # Convert the strings to actual numeric values (integers or floats)
-    numeric_values = [int(value) if '.' not in value else float(value) for value in numeric_values]
     
+def remove_word(MyText, ActivationWord):
+    words = MyText.split()
+    modified_words = [word for word in words if word != ActivationWord]
+    modified_string = ' '.join(modified_words)
+    return modified_string
 
-    return numeric_values
 
-         
-
+  
+def WordTest(MyText):
+    print (MyText)
+    
+    
 def Assistant(MyText):
     
     strings=""
@@ -119,7 +59,7 @@ def Assistant(MyText):
         elif(WordCheck("Mute",MyText)):            
             strings=strings+"Mute"
     
-        VolumeModify(Value,strings)
+        print(strings)
     elif(WordCheck("Song",MyText) or WordCheck("Music",MyText) or WordCheck("Pause",MyText) or WordCheck("Play",MyText)):
         if(WordCheck("Next",MyText)or WordCheck("Skip",MyText)):
             strings=strings+"Skip"
@@ -127,7 +67,7 @@ def Assistant(MyText):
             strings=strings+"Prev"
         elif( WordCheck("Pause",MyText) or WordCheck("Play",MyText)):
             strings=strings+"PausePlay"
-        Mediacontrol(strings)
+        print(strings)
         
         
 def main(): 
@@ -152,12 +92,16 @@ def main():
                 MyText = r.recognize_google(audio2)
                 MyText = MyText.lower()
                 if(WordCheck(Activationword,MyText)):
-                    Assistant(MyText)
+                    MyText=remove_word(MyText,Activationword)
+                    if(operationmode==1):
+                        Assistant(MyText)
+                    else:
+                        WordTest(MyText)
                 
         except sr.RequestError as e:
             print("Could not request results; {0}".format(e))
             
         except sr.UnknownValueError:
-            print("unknown error occurred")
+            print("Could You Please Repeat That")
             
 main()
