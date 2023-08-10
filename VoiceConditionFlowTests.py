@@ -15,7 +15,7 @@ r = sr.Recognizer()
 
 
 
-operationmode=1
+operationmode=0
 
 
 
@@ -78,7 +78,7 @@ def main():
         try:
             
             # use the microphone as source for input.
-            with sr.Microphone() as source2:
+            with sr.Microphone(1) as source2:
                 
                 # wait for a second to let the recognizer
                 # adjust the energy threshold based on

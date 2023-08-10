@@ -158,6 +158,6 @@ def main():
             print("Could not request results; {0}".format(e))
             
         except sr.UnknownValueError:
-            print("unknown error occurred")
+            print("could you please repeat that")
             
 main()
